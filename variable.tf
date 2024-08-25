@@ -12,3 +12,17 @@ variable "environment" {
   description = "Deployment environment"
   type        = string
 }
+
+variable "my-ip-address" {
+  description = "My local ip address"
+  type        = string
+}
+
+variable "instance_type" {
+  type = string
+}
+
+variable "public_key_location" {
+  description = "Path to local public key"
+  type = string
+}
