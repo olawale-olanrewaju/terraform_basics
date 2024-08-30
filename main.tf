@@ -138,7 +138,34 @@ resource "aws_instance" "app-server" {
   
   key_name                    = aws_key_pair.ssh_key.key_name
 
-  user_data = file("entry-script.sh")
+  # user_data = file("entry-script.sh")
+
+  connection {
+    type = "ssh"
+    host = self.public_ip
+    user = "ec2-user"
+    private_key = file(var.private_key_location)
+
+  }
+
+  provisioner "file" {
+    destination = "/home/ec2-user/entry-script-on-ec2.sh"
+    source = "entry-script.sh"
+  }
+
+  provisioner "remote-exec" {
+    # script = "/home/ec2-user/entry-script-on-ec2.sh"
+    inline = [ 
+      "chmod +x /home/ec2-user/entry-script-on-ec2.sh",
+      "./home/ec2-user/entry-script-on-ec2.sh",
+      "export ENV=dev",
+      "mkdir newdir"
+     ]
+  }
+
+  provisioner "local-exec" {
+    command = "echo ${self.public_ip} >> instance_ip.txt"
+  }
 
   tags = {
     Name : "${var.environment}-app-server-${count.index}"

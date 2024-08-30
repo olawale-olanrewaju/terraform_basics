@@ -30,3 +30,8 @@ variable "public_key_location" {
 variable "number_of_instance" {
   type = number
 }
+
+variable "private_key_location" {
+  description = "Path to local public key"
+  type = string
+}
