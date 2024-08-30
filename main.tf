@@ -127,6 +127,7 @@ resource "aws_vpc_security_group_egress_rule" "allow-all-egress" {
 # }
 
 resource "aws_instance" "app-server" {
+  count = var.number_of_instance
   ami           = data.aws_ami.app-ami.id
   instance_type = var.instance_type
 
@@ -140,7 +141,7 @@ resource "aws_instance" "app-server" {
   user_data = file("entry-script.sh")
 
   tags = {
-    Name : "${var.environment}-app-server"
+    Name : "${var.environment}-app-server-${count.index}"
   }
 }
 

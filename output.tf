@@ -10,6 +10,6 @@ output "aws-ami" {
   value = data.aws_ami.app-ami.id
 }
 
-output "app-server-public-ip" {
-  value = aws_instance.app-server.public_ip
-}
+# output "app-server-public-ip" {
+#   value = aws_instance.app-server.public_ip
+# }
